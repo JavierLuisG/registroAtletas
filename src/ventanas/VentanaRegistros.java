@@ -1,8 +1,16 @@
 package ventanas;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class VentanaRegistros extends javax.swing.JDialog {
+
     // modelo para la tabla
     DefaultTableModel model = new DefaultTableModel();
 
@@ -11,15 +19,45 @@ public class VentanaRegistros extends javax.swing.JDialog {
         modeloTabla();
         initComponents();
         setLocationRelativeTo(null);
-        setResizable(false);        
+        setResizable(false);
     }
-    
+
     public void modeloTabla() {
         // se agregan las columnas a la tabla mediante el modelo 
         model.addColumn("Nombre");
         model.addColumn("Edad");
         model.addColumn("Peso (kg)");
         model.addColumn("Estatura (cm)");
+        leerArchivoBinario();
+    }
+
+    public void leerArchivoBinario() {
+        Atleta atleta;
+        String nombre;
+        String edad;
+        String peso;
+        String estatura;
+        try {
+            FileInputStream archivo = new FileInputStream("registros.bin");
+            ObjectInputStream lector = new ObjectInputStream(archivo);            
+            while(true){
+                atleta = (Atleta)lector.readObject(); // va relacionado con EOFException
+                nombre = atleta.getNombre();
+                // convertir a String edad, peso, estatura
+                edad = String.valueOf(atleta.getEdad());
+                peso = String.valueOf(atleta.getPeso());
+                estatura = String.valueOf(atleta.getEstatura());
+                String fila[] = {nombre, edad, peso, estatura};
+                model.addRow(fila);
+            }
+        // cuando el readObject termina de leer los datos manda una Excepcion que es EOF
+        } catch (EOFException ex) {
+            return; // no es para mostrar un error, se llegó al final del archivo
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error, no se pudo leer el archivo: " + ex);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.err.println("Error, no puede leer el objeto: " + ex);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -39,6 +77,7 @@ public class VentanaRegistros extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Atletas Registrados");
 
+        tabla.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         tabla.setModel(model);
         jScrollPane1.setViewportView(tabla);
 
