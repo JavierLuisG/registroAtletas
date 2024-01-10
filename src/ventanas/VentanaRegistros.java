@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class VentanaRegistros extends javax.swing.JDialog {
@@ -33,24 +31,20 @@ public class VentanaRegistros extends javax.swing.JDialog {
 
     public void leerArchivoBinario() {
         Atleta atleta;
-        String nombre;
-        String edad;
-        String peso;
-        String estatura;
+        String cadena;
+        Object fila[] = new Object[4];
         try {
             FileInputStream archivo = new FileInputStream("registros.bin");
-            ObjectInputStream lector = new ObjectInputStream(archivo);            
-            while(true){
-                atleta = (Atleta)lector.readObject(); // va relacionado con EOFException
-                nombre = atleta.getNombre();
-                // convertir a String edad, peso, estatura
-                edad = String.valueOf(atleta.getEdad());
-                peso = String.valueOf(atleta.getPeso());
-                estatura = String.valueOf(atleta.getEstatura());
-                String fila[] = {nombre, edad, peso, estatura};
+            ObjectInputStream lector = new ObjectInputStream(archivo);
+            while (true) {
+                atleta = (Atleta) lector.readObject();
+                fila[0] = atleta.getNombre();
+                fila[1] = atleta.getEdad();
+                fila[2] = atleta.getPeso();
+                fila[3] = atleta.getEstatura();
                 model.addRow(fila);
             }
-        // cuando el readObject termina de leer los datos manda una Excepcion que es EOF
+            // cuando el readObject termina de leer los datos manda una Excepcion que es EOF
         } catch (EOFException ex) {
             return; // no es para mostrar un error, se llegó al final del archivo
         } catch (FileNotFoundException ex) {
@@ -85,6 +79,11 @@ public class VentanaRegistros extends javax.swing.JDialog {
         btnRegresar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -125,6 +124,10 @@ public class VentanaRegistros extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
