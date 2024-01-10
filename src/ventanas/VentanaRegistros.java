@@ -1,12 +1,25 @@
 package ventanas;
 
+import javax.swing.table.DefaultTableModel;
+
 public class VentanaRegistros extends javax.swing.JDialog {
+    // modelo para la tabla
+    DefaultTableModel model = new DefaultTableModel();
 
     public VentanaRegistros(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        modeloTabla();
         initComponents();
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(false);        
+    }
+    
+    public void modeloTabla() {
+        // se agregan las columnas a la tabla mediante el modelo 
+        model.addColumn("Nombre");
+        model.addColumn("Edad");
+        model.addColumn("Peso (kg)");
+        model.addColumn("Estatura (cm)");
     }
 
     @SuppressWarnings("unchecked")
@@ -16,8 +29,8 @@ public class VentanaRegistros extends javax.swing.JDialog {
         panel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tabla = new javax.swing.JTable();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -26,23 +39,13 @@ public class VentanaRegistros extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Atletas Registrados");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        tabla.setModel(model);
+        jScrollPane1.setViewportView(tabla);
 
-        jButton1.setBackground(new java.awt.Color(115, 12, 115));
-        jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Regresar");
+        btnRegresar.setBackground(new java.awt.Color(115, 12, 115));
+        btnRegresar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setText("Regresar");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -55,7 +58,7 @@ public class VentanaRegistros extends javax.swing.JDialog {
                 .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(75, 75, 75))
         );
         panelLayout.setVerticalGroup(
@@ -66,7 +69,7 @@ public class VentanaRegistros extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
@@ -98,10 +101,10 @@ public class VentanaRegistros extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel panel;
+    private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }
