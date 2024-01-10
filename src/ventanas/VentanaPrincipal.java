@@ -1,6 +1,11 @@
 
 package ventanas;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     public VentanaPrincipal() {
@@ -60,6 +65,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnRegistrarAtleta.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnRegistrarAtleta.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarAtleta.setText("Registrar Atleta");
+        btnRegistrarAtleta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarAtletaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -67,28 +77,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(cajaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cajaEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addContainerGap(27, Short.MAX_VALUE)
-                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(cajaPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(cajaEstatura, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(cajaPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(cajaEstatura, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(50, 50, 50))
             .addGroup(panelLayout.createSequentialGroup()
                 .addGap(188, 188, 188)
@@ -152,6 +158,33 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegistrarAtletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAtletaActionPerformed
+        // declarar las variables donde se guardan los valores obtenidos 
+        String nombre;
+        int edad;
+        double peso;
+        int estatura;
+        // obtener los valores de las Text Field y asignarlo a las variables
+        nombre = cajaNombre.getText(); 
+        edad = Integer.parseInt(cajaEdad.getText()); 
+        peso = Double.parseDouble(cajaPeso.getText());
+        estatura = Integer.parseInt(cajaEstatura.getText());
+        // instanciar un objeto de atleta con sus parametros
+        Atleta atleta = new Atleta(nombre, edad, peso, estatura);
+        // implementar metodo para escribir en el archivo binario
+        escribirBinario(atleta);
+        // vaciar las Text Field luego de agregar el objeto al archivo binario
+        cajaNombre.setText("");
+        cajaEdad.setText("");
+        cajaPeso.setText("");
+        cajaEstatura.setText("");
+        
+    }//GEN-LAST:event_btnRegistrarAtletaActionPerformed
+    private void escribirBinario(Atleta atleta){
+        // código para escribir el objeto al archivo binario
+    }
+    
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
