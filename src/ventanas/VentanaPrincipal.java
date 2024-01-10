@@ -130,12 +130,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         registroAtleta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         registroAtleta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/run.png"))); // NOI18N
         registroAtleta.setText("Mostrar registro de atletas");
+        registroAtleta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registroAtletaActionPerformed(evt);
+            }
+        });
         jMenu1.add(registroAtleta);
         jMenu1.add(jSeparator1);
 
         salir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exit.png"))); // NOI18N
         salir.setText("Salir");
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
         jMenu1.add(salir);
 
         menu.add(jMenu1);
@@ -178,6 +188,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         cajaEstatura.setText("");
 
     }//GEN-LAST:event_btnRegistrarAtletaActionPerformed
+
+    private void registroAtletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroAtletaActionPerformed
+        // con true no se puede acceder a la ventana principal si la VentanaRegistros está abierta
+        VentanaRegistros registros = new VentanaRegistros(this, true);
+        registros.setVisible(true);
+    }//GEN-LAST:event_registroAtletaActionPerformed
+
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_salirActionPerformed
     private void escribirBinario(Atleta atleta) {
         try {
             // se pone true como segundo parametro para que se agregue mas contenido
