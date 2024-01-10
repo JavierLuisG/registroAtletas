@@ -1,11 +1,8 @@
-
 package ventanas;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     public VentanaPrincipal() {
@@ -14,7 +11,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setTitle("Registro de Atletas");
         setResizable(false);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -166,8 +163,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         double peso;
         int estatura;
         // obtener los valores de las Text Field y asignarlo a las variables
-        nombre = cajaNombre.getText(); 
-        edad = Integer.parseInt(cajaEdad.getText()); 
+        nombre = cajaNombre.getText();
+        edad = Integer.parseInt(cajaEdad.getText());
         peso = Double.parseDouble(cajaPeso.getText());
         estatura = Integer.parseInt(cajaEstatura.getText());
         // instanciar un objeto de atleta con sus parametros
@@ -179,14 +176,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         cajaEdad.setText("");
         cajaPeso.setText("");
         cajaEstatura.setText("");
-        
+
     }//GEN-LAST:event_btnRegistrarAtletaActionPerformed
-    private void escribirBinario(Atleta atleta){
-        // código para escribir el objeto al archivo binario
+    private void escribirBinario(Atleta atleta) {
+        try {
+            // se pone true como segundo parametro para que se agregue mas contenido
+            FileOutputStream archivo = new FileOutputStream("registros.bin", true);
+            /**
+             * Se arroja exception si se realiza directamente con
+             * ObjectOutputStream la excepcion indica que se han creado dos
+             * cabeceras distintas. Solo puede ponerse una sola cabecera al
+             * inicio del archibo binario. Se crea e instancia Añadir... para
+             * que al ingresar un nuevo objeto no se cree una cabecera por cada
+             * uno, sino que haya siempre solo una al comienzo del archivo
+             */
+            AñadirContenidoAtleta añadir = new AñadirContenidoAtleta(archivo);
+            añadir.writeObject(atleta);
+            añadir.close();
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error, no se pudo añadir texto " + ex);
+        } catch (IOException ex) {
+            System.err.println("Error, no se pudo añadir texto " + ex);
+        }
     }
-    
+
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VentanaPrincipal().setVisible(true);
